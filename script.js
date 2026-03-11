@@ -349,6 +349,37 @@ function setFormMessage(message) {
   formMessage.hidden = !message;
 }
 
+function setDateInputValue(input, date) {
+  input.value = date ? dateKey(date) : "";
+}
+
+function syncSecondPaymentDate() {
+  const paymentCount = Number(paymentCountInput.value);
+  const firstDate = parseDateValue(paymentRows[0].raceDateInput.value);
+  const secondRow = paymentRows[1];
+
+  if (paymentCount !== 2) {
+    secondRow.raceDateInput.readOnly = false;
+    return;
+  }
+
+  secondRow.raceDateInput.readOnly = true;
+
+  if (!firstDate) {
+    secondRow.raceDateInput.value = "";
+    return;
+  }
+
+  const firstWeek = getRaceWeek(firstDate);
+
+  if (!firstWeek) {
+    secondRow.raceDateInput.value = "";
+    return;
+  }
+
+  setDateInputValue(secondRow.raceDateInput, firstWeek.end);
+}
+
 function updatePaymentVisibility() {
   const paymentCount = Number(paymentCountInput.value);
   const secondActive = paymentCount === 2;
@@ -356,7 +387,7 @@ function updatePaymentVisibility() {
 
   secondRow.group.hidden = !secondActive;
   secondRow.programInput.required = secondActive;
-  secondRow.raceDateInput.required = secondActive;
+  secondRow.raceDateInput.required = false;
   secondRow.amountInput.required = secondActive;
 
   if (!secondActive) {
@@ -364,6 +395,8 @@ function updatePaymentVisibility() {
     secondRow.raceDateInput.value = "";
     secondRow.amountInput.value = "";
   }
+
+  syncSecondPaymentDate();
 }
 
 function getActiveRows() {
@@ -379,6 +412,16 @@ function clearRowDateValidity() {
 
 function validateRaceWeeks(activeRows) {
   clearRowDateValidity();
+
+  const paymentCount = Number(paymentCountInput.value);
+  const firstDate = parseDateValue(paymentRows[0].raceDateInput.value);
+
+  if (paymentCount === 2 && firstDate && firstDate.getDay() !== 2) {
+    const message = "Si hay 2 pagos, la primera fecha debe ser martes y la segunda sera el sabado de esa semana.";
+    paymentRows[0].raceDateInput.setCustomValidity(message);
+    setFormMessage(message);
+    return { valid: false, sourceWeek: null };
+  }
 
   const rowsWithDates = activeRows
     .map((row) => ({
