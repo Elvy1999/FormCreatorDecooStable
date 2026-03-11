@@ -489,18 +489,69 @@ function openPrintPreview() {
   <base href="${baseHref}">
   <title>Imprimir carta</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .print-fit-frame {
+      width: 7.75in;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .print-fit-target {
+      transform-origin: top center;
+    }
+
+    @media print {
+      .preview-panel {
+        overflow: visible !important;
+      }
+
+      .print-fit-frame {
+        width: 7.75in;
+        margin: 0 auto;
+      }
+    }
+  </style>
 </head>
 <body>
   <main class="preview-panel">
-    ${printArea.outerHTML}
+    <div class="print-fit-frame">
+      ${printArea.outerHTML.replace('class="letter-sheet"', 'class="letter-sheet print-fit-target"')}
+    </div>
   </main>
   <script>
+    function fitToSinglePage() {
+      const frame = document.querySelector(".print-fit-frame");
+      const target = document.querySelector(".print-fit-target");
+
+      if (!frame || !target) {
+        return;
+      }
+
+      target.style.transform = "";
+      target.style.width = "";
+
+      const pageWidth = 7.75 * 96;
+      const pageHeight = 10.6 * 96;
+      const widthScale = pageWidth / target.scrollWidth;
+      const heightScale = pageHeight / target.scrollHeight;
+      const scale = Math.min(1, widthScale, heightScale);
+
+      if (scale < 1) {
+        target.style.transform = "scale(" + scale + ")";
+        target.style.width = "calc(100% / " + scale + ")";
+        frame.style.height = (target.scrollHeight * scale) + "px";
+      } else {
+        frame.style.height = "auto";
+      }
+    }
+
     window.addEventListener("load", () => {
       setTimeout(() => {
+        fitToSinglePage();
         if (window.print) {
           window.print();
         }
-      }, 250);
+      }, 300);
     });
   <\/script>
 </body>
