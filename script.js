@@ -353,6 +353,26 @@ function setDateInputValue(input, date) {
   input.value = date ? dateKey(date) : "";
 }
 
+function syncSecondProgramNumber() {
+  const paymentCount = Number(paymentCountInput.value);
+  const firstProgram = parseProgramNumber(paymentRows[0].programInput);
+  const secondRow = paymentRows[1];
+
+  if (paymentCount !== 2) {
+    secondRow.programInput.readOnly = false;
+    return;
+  }
+
+  secondRow.programInput.readOnly = true;
+
+  if (firstProgram == null) {
+    secondRow.programInput.value = "";
+    return;
+  }
+
+  secondRow.programInput.value = String(firstProgram + 1);
+}
+
 function syncSecondPaymentDate() {
   const paymentCount = Number(paymentCountInput.value);
   const firstDate = parseDateValue(paymentRows[0].raceDateInput.value);
@@ -396,6 +416,7 @@ function updatePaymentVisibility() {
     secondRow.amountInput.value = "";
   }
 
+  syncSecondProgramNumber();
   syncSecondPaymentDate();
 }
 
