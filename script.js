@@ -8,6 +8,7 @@ const previewDate = document.getElementById("previewDate");
 const previewWeekRange = document.getElementById("previewWeekRange");
 const previewTotal = document.getElementById("previewTotal");
 const previewTotalWords = document.getElementById("previewTotalWords");
+const program2Display = document.getElementById("program2Display");
 
 const fullDayNames = [
   "Domingo",
@@ -349,6 +350,10 @@ function setFormMessage(message) {
   formMessage.hidden = !message;
 }
 
+function setDisplayValue(element, value, fallback = "") {
+  element.textContent = value || fallback;
+}
+
 function setDateInputValue(input, date) {
   input.value = date ? dateKey(date) : "";
 }
@@ -359,18 +364,19 @@ function syncSecondProgramNumber() {
   const secondRow = paymentRows[1];
 
   if (paymentCount !== 2) {
-    secondRow.programInput.readOnly = false;
+    setDisplayValue(program2Display, "", "Se genera automaticamente");
     return;
   }
-
-  secondRow.programInput.readOnly = true;
 
   if (firstProgram == null) {
     secondRow.programInput.value = "";
+    setDisplayValue(program2Display, "", "Se genera automaticamente");
     return;
   }
 
-  secondRow.programInput.value = String(firstProgram + 1);
+  const nextProgram = String(firstProgram + 1);
+  secondRow.programInput.value = nextProgram;
+  setDisplayValue(program2Display, nextProgram);
 }
 
 function syncSecondPaymentDate() {
@@ -406,7 +412,7 @@ function updatePaymentVisibility() {
   const secondRow = paymentRows[1];
 
   secondRow.group.hidden = !secondActive;
-  secondRow.programInput.required = secondActive;
+  secondRow.programInput.required = false;
   secondRow.raceDateInput.required = false;
   secondRow.amountInput.required = secondActive;
 

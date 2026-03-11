@@ -106,9 +106,26 @@ body {
   gap: 0.45rem;
 }
 
+.auto-field {
+  padding: 0.02rem 0;
+}
+
 .field span {
   font-size: 0.92rem;
   font-weight: 600;
+}
+
+.auto-value {
+  margin: 0;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(53, 43, 34, 0.18);
+  padding: 0.8rem 0.9rem;
+  font: inherit;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text-main);
 }
 
 .field-hint {
@@ -489,6 +506,12 @@ body {
 
   .field span {
     font-size: 0.88rem;
+  }
+
+  .auto-value {
+    min-height: 3rem;
+    font-size: 16px;
+    padding: 0.78rem 0.85rem;
   }
 
   .field-hint {

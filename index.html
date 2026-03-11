@@ -71,19 +71,12 @@
           <div class="payment-form-group" id="payment2Group">
             <p class="group-title">Pago 2</p>
 
-            <label class="field" id="program2Field">
+            <div class="field auto-field" id="program2Field">
               <span>Programa no 2</span>
-              <input
-                id="program2"
-                name="program2"
-                type="number"
-                inputmode="numeric"
-                min="1"
-                step="1"
-                placeholder="15"
-              >
+              <p class="auto-value" id="program2Display">Se genera automaticamente</p>
+              <input id="program2" name="program2" type="hidden">
               <small class="field-hint">Se completa automaticamente con el numero siguiente al programa 1.</small>
-            </label>
+            </div>
 
             <label class="field" id="raceDate2Field">
               <span>Fecha pago 2</span>
