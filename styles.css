@@ -1,14 +1,14 @@
 :root {
-  --bg-ink: #1e2128;
-  --bg-soft: #f3ede0;
-  --panel: rgba(255, 250, 241, 0.96);
+  --bg-ink: #d6d5cf;
+  --bg-soft: #e2e1db;
+  --panel: rgba(249, 248, 243, 0.96);
   --paper: #fffdfa;
   --paper-shadow: rgba(30, 19, 10, 0.18);
   --accent: #c75151;
   --text-main: #232323;
   --text-muted: #5f554b;
   --line-soft: #918579;
-  --signature-paper: #f4ecdf;
+  --signature-paper: #d7d6d0;
   --signature-border: rgba(115, 94, 73, 0.18);
 }
 
@@ -25,8 +25,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.14), transparent 34%),
-    linear-gradient(160deg, #12151b 0%, #1e232d 58%, #252627 100%);
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.48), transparent 38%),
+    linear-gradient(160deg, #cecdc7 0%, #d8d7d1 58%, #e3e2dc 100%);
   color: var(--text-main);
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
 }
@@ -49,10 +49,10 @@ body {
   width: 100%;
   background: var(--panel);
   color: var(--text-main);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.58);
   border-radius: 1.25rem;
   padding: 1.4rem;
-  box-shadow: 0 20px 55px rgba(8, 10, 12, 0.22);
+  box-shadow: 0 20px 55px rgba(76, 69, 60, 0.16);
   backdrop-filter: blur(14px);
 }
 
@@ -89,7 +89,7 @@ body {
   gap: 0.9rem;
   padding: 0.95rem;
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(94, 77, 62, 0.12);
 }
 
@@ -416,9 +416,9 @@ body {
   top: -0.1in;
   width: 2.2in;
   min-height: 0.86in;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 248, 243, 0.84));
+  background: linear-gradient(180deg, rgba(214, 213, 207, 0.98), rgba(223, 222, 216, 0.9));
   border-radius: 0.22in;
-  border: 1px solid rgba(115, 94, 73, 0.1);
+  border: 1px solid rgba(115, 94, 73, 0.06);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -432,7 +432,7 @@ body {
   object-fit: contain;
   mix-blend-mode: multiply;
   opacity: 0.96;
-  filter: grayscale(0.08) saturate(0.72) contrast(1.08) brightness(0.98);
+  filter: grayscale(0.08) saturate(0.72) contrast(1.05) brightness(1.02);
 }
 
 .signature-fallback {
@@ -604,18 +604,51 @@ body {
   }
 
   .letter-header h2 {
-    font-size: 0.41in;
+    font-size: 0.38in;
   }
 
   .city-line,
   .date-line,
   .letter-body {
-    font-size: 0.21in;
+    font-size: 0.195in;
+  }
+
+  .header-date-block {
+    margin-top: 0.24in;
+  }
+
+  .attention-row {
+    margin-top: 0.2in;
+  }
+
+  .intro-copy {
+    margin-top: 0.18in;
   }
 
   .payments-block,
   .bank-copy,
   .signature-block {
+    margin-top: 0.14in;
+  }
+
+  .payment-item {
+    margin-top: 0.12in;
+  }
+
+  .payment-words,
+  .total-words {
+    margin-top: 0.03in;
+  }
+
+  .signature-label {
+    padding-top: 0.82in;
+  }
+
+  .owner-name {
+    margin-top: 0.3in;
+  }
+
+  .page-number {
     margin-top: 0.18in;
   }
 
