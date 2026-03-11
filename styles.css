@@ -296,11 +296,12 @@ body {
 .fill-slot {
   display: inline-block;
   vertical-align: baseline;
+  border-bottom: 1px solid var(--line-soft);
+  min-height: 0.18in;
 }
 
 .fill-slot:empty::after {
-  content: "______________";
-  letter-spacing: 0.04em;
+  content: "";
 }
 
 .week-slot {
@@ -345,25 +346,26 @@ body {
 .words-slot {
   display: inline-block;
   vertical-align: baseline;
+  border-bottom: 1px solid var(--line-soft);
+  min-height: 0.18in;
 }
 
 .money-slot {
-  min-width: 1.48in;
+  min-width: 1.55in;
   padding-left: 0.02in;
 }
 
 .money-slot:empty::after {
-  content: "______________";
-  letter-spacing: 0.04em;
+  content: "";
 }
 
 .words-slot {
-  min-width: 5.5in;
+  width: 5.2in;
+  max-width: 100%;
 }
 
 .words-slot:empty::after {
-  content: "____________________________________________________________";
-  letter-spacing: 0.04em;
+  content: "";
 }
 
 .total-block {

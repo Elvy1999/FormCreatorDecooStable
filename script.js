@@ -469,15 +469,66 @@ function canPrint() {
   return form.reportValidity();
 }
 
-form.addEventListener("input", renderLetter);
-form.addEventListener("change", renderLetter);
+function openPrintPreview() {
+  const printArea = document.getElementById("printArea");
+  const printWindow = window.open("", "_blank");
+
+  if (!printWindow || !printArea) {
+    window.print();
+    return;
+  }
+
+  const baseHref = document.baseURI;
+
+  printWindow.document.open();
+  printWindow.document.write(`<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="${baseHref}">
+  <title>Imprimir carta</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="preview-panel">
+    ${printArea.outerHTML}
+  </main>
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        if (window.print) {
+          window.print();
+        }
+      }, 250);
+    });
+  <\/script>
+</body>
+</html>`);
+  printWindow.document.close();
+}
+
+function bindLivePreviewEvents() {
+  const controls = form.querySelectorAll("input, select");
+
+  controls.forEach((control) => {
+    ["input", "change", "keyup", "blur"].forEach((eventName) => {
+      control.addEventListener(eventName, () => {
+        // Some mobile browsers delay updates on date/number controls until blur/change.
+        renderLetter();
+      });
+    });
+  });
+}
+
 printButton.addEventListener("click", () => {
   if (!canPrint()) {
     return;
   }
 
-  window.print();
+  openPrintPreview();
 });
 
+bindLivePreviewEvents();
 setTodayIfEmpty();
 renderLetter();
