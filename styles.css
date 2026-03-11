@@ -84,6 +84,24 @@ body {
   margin-top: 1.25rem;
 }
 
+.payment-form-group {
+  display: grid;
+  gap: 0.9rem;
+  padding: 0.95rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(94, 77, 62, 0.12);
+}
+
+.group-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 .field {
   display: grid;
   gap: 0.45rem;
@@ -118,6 +136,14 @@ body {
   margin-top: 0.35rem;
 }
 
+.form-message {
+  min-height: 1.15rem;
+  margin: 0;
+  color: #9b2f2f;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
 .actions button {
   cursor: pointer;
   border: none;
@@ -147,7 +173,7 @@ body {
 .letter-sheet {
   width: 8.5in;
   min-height: 11in;
-  padding: 0.82in 0.78in 0.7in;
+  padding: 0.72in 0.68in 0.56in;
   background: var(--paper);
   color: #252525;
   box-shadow: 0 26px 60px var(--paper-shadow);
@@ -164,7 +190,7 @@ body {
   margin: 0;
   text-align: center;
   color: var(--accent);
-  font-size: 0.48in;
+  font-size: 0.43in;
   letter-spacing: 0.02em;
   font-weight: 700;
 }
@@ -172,14 +198,14 @@ body {
 .header-date-block {
   width: 3.05in;
   margin-left: auto;
-  margin-top: 0.38in;
+  margin-top: 0.3in;
   text-align: center;
 }
 
 .city-line,
 .date-line {
   margin: 0;
-  font-size: 0.26in;
+  font-size: 0.23in;
 }
 
 .date-line {
@@ -189,7 +215,7 @@ body {
 }
 
 .letter-body {
-  font-size: 0.24in;
+  font-size: 0.215in;
 }
 
 .letter-body p {
@@ -223,7 +249,7 @@ body {
 .attention-row {
   grid-template-columns: 2.85in 1fr;
   gap: 0.32in;
-  margin-top: 0.32in;
+  margin-top: 0.26in;
 }
 
 .attention-left,
@@ -242,7 +268,7 @@ body {
 }
 
 .intro-copy {
-  margin-top: 0.28in;
+  margin-top: 0.24in;
 }
 
 .intro-copy p + p {
@@ -268,15 +294,37 @@ body {
   width: 2.95in;
 }
 
+.fill-slot {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.fill-slot:empty::after {
+  content: "______________";
+  letter-spacing: 0.04em;
+}
+
+.week-slot {
+  min-width: 2.6in;
+}
+
+.program-slot {
+  min-width: 0.36in;
+}
+
+.race-date-slot {
+  min-width: 2.55in;
+}
+
 .payments-block {
-  margin-top: 0.31in;
+  margin-top: 0.24in;
 }
 
 .payment-item {
   display: grid;
   grid-template-columns: 0.24in 1fr;
   gap: 0.18in;
-  margin-top: 0.24in;
+  margin-top: 0.18in;
 }
 
 .bullet {
@@ -290,7 +338,7 @@ body {
 }
 
 .payment-words {
-  margin-top: 0.06in;
+  margin-top: 0.04in;
   padding-left: 0.03in;
 }
 
@@ -311,7 +359,7 @@ body {
 }
 
 .words-slot {
-  min-width: 5.85in;
+  min-width: 5.5in;
 }
 
 .words-slot:empty::after {
@@ -320,7 +368,7 @@ body {
 }
 
 .total-block {
-  margin-top: 0.34in;
+  margin-top: 0.28in;
   padding-left: 0.56in;
 }
 
@@ -339,11 +387,11 @@ body {
 }
 
 .total-words {
-  margin-top: 0.08in;
+  margin-top: 0.05in;
 }
 
 .bank-copy {
-  margin-top: 0.34in;
+  margin-top: 0.28in;
 }
 
 .bank-grid {
@@ -358,8 +406,8 @@ body {
 
 .signature-block {
   position: relative;
-  margin-top: 0.26in;
-  min-height: 1.72in;
+  margin-top: 0.2in;
+  min-height: 1.45in;
 }
 
 .signature-wrap {
@@ -398,15 +446,15 @@ body {
 }
 
 .signature-label {
-  padding-top: 1.04in;
+  padding-top: 0.92in;
 }
 
 .owner-name {
-  margin-top: 0.48in;
+  margin-top: 0.38in;
 }
 
 .page-number {
-  margin-top: 0.34in;
+  margin-top: 0.26in;
   text-align: center;
 }
 
@@ -459,6 +507,11 @@ body {
     margin-top: 1rem;
   }
 
+  .payment-form-group {
+    gap: 0.8rem;
+    padding: 0.85rem;
+  }
+
   .field span {
     font-size: 0.88rem;
   }
@@ -501,6 +554,10 @@ body {
     letter-spacing: 0.12em;
   }
 
+  .payment-form-group {
+    padding: 0.75rem;
+  }
+
   .preview-panel {
     overflow-x: auto;
     justify-content: flex-start;
@@ -541,9 +598,25 @@ body {
   .letter-sheet {
     width: auto;
     min-height: auto;
-    padding: 0;
+    padding: 0.03in 0;
     box-shadow: none;
     margin: 0;
+  }
+
+  .letter-header h2 {
+    font-size: 0.41in;
+  }
+
+  .city-line,
+  .date-line,
+  .letter-body {
+    font-size: 0.21in;
+  }
+
+  .payments-block,
+  .bank-copy,
+  .signature-block {
+    margin-top: 0.18in;
   }
 
   .signature-fallback {

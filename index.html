@@ -31,31 +31,79 @@
             </select>
           </label>
 
-          <label class="field">
-            <span>Monto pago 1 (RD$)</span>
-            <input
-              id="payment1"
-              name="payment1"
-              type="number"
-              inputmode="decimal"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-            >
-          </label>
+          <div class="payment-form-group">
+            <p class="group-title">Pago 1</p>
 
-          <label class="field" id="payment2Field">
-            <span>Monto pago 2 (RD$)</span>
-            <input
-              id="payment2"
-              name="payment2"
-              type="number"
-              inputmode="decimal"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-            >
-          </label>
+            <label class="field">
+              <span>Programa no 1</span>
+              <input
+                id="program1"
+                name="program1"
+                type="number"
+                inputmode="numeric"
+                min="1"
+                step="1"
+                placeholder="14"
+                required
+              >
+            </label>
+
+            <label class="field">
+              <span>Fecha pago 1</span>
+              <input id="raceDate1" name="raceDate1" type="date" required>
+            </label>
+
+            <label class="field">
+              <span>Monto pago 1 (RD$)</span>
+              <input
+                id="payment1"
+                name="payment1"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+                required
+              >
+            </label>
+          </div>
+
+          <div class="payment-form-group" id="payment2Group">
+            <p class="group-title">Pago 2</p>
+
+            <label class="field" id="program2Field">
+              <span>Programa no 2</span>
+              <input
+                id="program2"
+                name="program2"
+                type="number"
+                inputmode="numeric"
+                min="1"
+                step="1"
+                placeholder="15"
+              >
+            </label>
+
+            <label class="field" id="raceDate2Field">
+              <span>Fecha pago 2</span>
+              <input id="raceDate2" name="raceDate2" type="date">
+            </label>
+
+            <label class="field" id="payment2Field">
+              <span>Monto pago 2 (RD$)</span>
+              <input
+                id="payment2"
+                name="payment2"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+              >
+            </label>
+          </div>
+
+          <p id="formMessage" class="form-message" aria-live="polite"></p>
 
           <div class="actions">
             <button type="button" id="printButton">Imprimir carta</button>
@@ -103,7 +151,7 @@
             <p>Distinguidos se&ntilde;ores,</p>
             <p>
               Por medio de la presente, tengo a bien solicitar el pago de premio(s) de la semana del
-              <span class="blank-inline blank-inline-long"></span>, correspondiente a la participaci&oacute;n de
+              <span class="fill-slot week-slot" id="previewWeekRange"></span>, correspondiente a la participaci&oacute;n de
               nuestros ejemplares que incluyen dicho periodo, seg&uacute;n detallamos a continuaci&oacute;n:
             </p>
           </div>
@@ -113,8 +161,8 @@
               <div class="bullet">&bull;</div>
               <div class="payment-copy">
                 <p class="payment-line strong">
-                  Programa no <span class="blank-inline blank-inline-short"></span> de fecha
-                  <span class="blank-inline blank-inline-verylong"></span>.
+                  Programa no <span class="fill-slot program-slot" id="previewProgram1"></span> de fecha
+                  <span class="fill-slot race-date-slot" id="previewRaceDate1"></span>.
                 </p>
                 <p class="payment-line strong">
                   Para un total de RD$<span class="money-slot" id="previewPayment1"></span>.
@@ -127,8 +175,8 @@
               <div class="bullet">&bull;</div>
               <div class="payment-copy">
                 <p class="payment-line strong">
-                  Programa no <span class="blank-inline blank-inline-short"></span> de fecha
-                  <span class="blank-inline blank-inline-verylong"></span>.
+                  Programa no <span class="fill-slot program-slot" id="previewProgram2"></span> de fecha
+                  <span class="fill-slot race-date-slot" id="previewRaceDate2"></span>.
                 </p>
                 <p class="payment-line strong">
                   Para un total de RD$<span class="money-slot" id="previewPayment2"></span>.

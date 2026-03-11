@@ -1,23 +1,18 @@
 const form = document.getElementById("letterForm");
+const formMessage = document.getElementById("formMessage");
 const letterDateInput = document.getElementById("letterDate");
 const paymentCountInput = document.getElementById("paymentCount");
-const payment1Input = document.getElementById("payment1");
-const payment2Input = document.getElementById("payment2");
-const payment2Field = document.getElementById("payment2Field");
 const printButton = document.getElementById("printButton");
 
 const previewDate = document.getElementById("previewDate");
-const previewPayment1 = document.getElementById("previewPayment1");
-const previewPayment1Words = document.getElementById("previewPayment1Words");
-const previewPayment2 = document.getElementById("previewPayment2");
-const previewPayment2Words = document.getElementById("previewPayment2Words");
+const previewWeekRange = document.getElementById("previewWeekRange");
 const previewTotal = document.getElementById("previewTotal");
 const previewTotalWords = document.getElementById("previewTotalWords");
 
 const signatureImage = document.getElementById("signatureImage");
 const signatureFallback = document.getElementById("signatureFallback");
 
-const dayNames = [
+const fullDayNames = [
   "Domingo",
   "Lunes",
   "Martes",
@@ -27,7 +22,7 @@ const dayNames = [
   "Sabado",
 ];
 
-const monthNames = [
+const monthNamesUpper = [
   "ENERO",
   "FEBRERO",
   "MARZO",
@@ -40,6 +35,21 @@ const monthNames = [
   "OCTUBRE",
   "NOVIEMBRE",
   "DICIEMBRE",
+];
+
+const monthNamesTitle = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
 ];
 
 const simpleNumbers = {
@@ -97,27 +107,120 @@ const hundredsNames = {
   900: "NOVECIENTOS",
 };
 
-function formatLetterDate(value) {
+const paymentRows = [
+  {
+    group: null,
+    programInput: document.getElementById("program1"),
+    raceDateInput: document.getElementById("raceDate1"),
+    amountInput: document.getElementById("payment1"),
+    previewProgram: document.getElementById("previewProgram1"),
+    previewRaceDate: document.getElementById("previewRaceDate1"),
+    previewAmount: document.getElementById("previewPayment1"),
+    previewWords: document.getElementById("previewPayment1Words"),
+  },
+  {
+    group: document.getElementById("payment2Group"),
+    programInput: document.getElementById("program2"),
+    raceDateInput: document.getElementById("raceDate2"),
+    amountInput: document.getElementById("payment2"),
+    previewProgram: document.getElementById("previewProgram2"),
+    previewRaceDate: document.getElementById("previewRaceDate2"),
+    previewAmount: document.getElementById("previewPayment2"),
+    previewWords: document.getElementById("previewPayment2Words"),
+  },
+];
+
+function setTodayIfEmpty() {
+  if (!letterDateInput.value) {
+    const now = new Date();
+    const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    letterDateInput.value = local.toISOString().slice(0, 10);
+  }
+}
+
+function parseDateValue(value) {
   if (!value) {
-    return "";
+    return null;
   }
 
   const date = new Date(`${value}T00:00:00`);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
 
-  if (Number.isNaN(date.getTime())) {
+function addDays(date, days) {
+  const clone = new Date(date);
+  clone.setDate(clone.getDate() + days);
+  return clone;
+}
+
+function dateKey(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function formatLetterDate(value) {
+  const date = parseDateValue(value);
+
+  if (!date) {
     return "";
   }
 
-  const dayName = dayNames[date.getDay()];
+  const dayName = fullDayNames[date.getDay()];
   const day = String(date.getDate()).padStart(2, "0");
-  const month = monthNames[date.getMonth()];
+  const month = monthNamesUpper[date.getMonth()];
   const year = date.getFullYear();
 
   return `${dayName} ${day} de ${month} del ${year}`;
 }
 
+function formatRaceDate(date) {
+  if (!date) {
+    return "";
+  }
+
+  const dayName = fullDayNames[date.getDay()];
+  const day = date.getDate();
+  const month = monthNamesTitle[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${dayName} ${day} de ${month} ${year}`;
+}
+
+function getRaceWeek(date) {
+  const day = date.getDay();
+
+  if (day < 2 || day > 6) {
+    return null;
+  }
+
+  const start = addDays(date, -(day - 2));
+  const end = addDays(start, 4);
+
+  return { start, end };
+}
+
+function formatWeekRange(week) {
+  if (!week) {
+    return "";
+  }
+
+  const { start, end } = week;
+  const sameMonth = start.getMonth() === end.getMonth();
+  const sameYear = start.getFullYear() === end.getFullYear();
+
+  if (sameMonth && sameYear) {
+    return `${start.getDate()} al ${end.getDate()} de ${monthNamesUpper[start.getMonth()]} del ${start.getFullYear()}`;
+  }
+
+  if (sameYear) {
+    return `${start.getDate()} de ${monthNamesUpper[start.getMonth()]} al ${end.getDate()} de ${monthNamesUpper[end.getMonth()]} del ${start.getFullYear()}`;
+  }
+
+  return `${start.getDate()} de ${monthNamesUpper[start.getMonth()]} del ${start.getFullYear()} al ${end.getDate()} de ${monthNamesUpper[end.getMonth()]} del ${end.getFullYear()}`;
+}
+
 function parseAmount(input) {
   const rawValue = input.value.trim();
+
   if (rawValue === "") {
     return null;
   }
@@ -128,6 +231,21 @@ function parseAmount(input) {
   }
 
   return Math.round(parsed * 100) / 100;
+}
+
+function parseProgramNumber(input) {
+  const rawValue = input.value.trim();
+
+  if (rawValue === "") {
+    return null;
+  }
+
+  const parsed = Number(rawValue);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    return null;
+  }
+
+  return parsed;
 }
 
 function formatCurrency(amount) {
@@ -206,7 +324,7 @@ function convertIntegerToWords(number) {
   return String(number);
 }
 
-function amountToWords(amount, includeCurrencyLabel = true) {
+function amountToWords(amount) {
   if (amount == null) {
     return "";
   }
@@ -222,10 +340,6 @@ function amountToWords(amount, includeCurrencyLabel = true) {
   const integerWords = convertIntegerToWords(integerPart);
   const centsText = String(cents).padStart(2, "0");
 
-  if (!includeCurrencyLabel) {
-    return `${integerWords} CON ${centsText}/100`;
-  }
-
   return `${integerWords} PESOS DOMINICANOS CON ${centsText}/100`;
 }
 
@@ -233,37 +347,124 @@ function setSlotValue(element, value) {
   element.textContent = value || "";
 }
 
-function updatePaymentVisibility() {
-  const paymentCount = paymentCountInput.value;
-  payment2Field.hidden = paymentCount !== "2";
-  payment1Input.required = true;
-  payment2Input.required = paymentCount === "2";
+function setFormMessage(message) {
+  formMessage.textContent = message || "";
+  formMessage.hidden = !message;
+}
 
-  if (paymentCount !== "2") {
-    payment2Input.value = "";
+function updatePaymentVisibility() {
+  const paymentCount = Number(paymentCountInput.value);
+  const secondActive = paymentCount === 2;
+  const secondRow = paymentRows[1];
+
+  secondRow.group.hidden = !secondActive;
+  secondRow.programInput.required = secondActive;
+  secondRow.raceDateInput.required = secondActive;
+  secondRow.amountInput.required = secondActive;
+
+  if (!secondActive) {
+    secondRow.programInput.value = "";
+    secondRow.raceDateInput.value = "";
+    secondRow.amountInput.value = "";
   }
+}
+
+function getActiveRows() {
+  const paymentCount = Number(paymentCountInput.value);
+  return paymentRows.slice(0, paymentCount);
+}
+
+function clearRowDateValidity() {
+  paymentRows.forEach((row) => {
+    row.raceDateInput.setCustomValidity("");
+  });
+}
+
+function validateRaceWeeks(activeRows) {
+  clearRowDateValidity();
+
+  const rowsWithDates = activeRows
+    .map((row) => ({
+      row,
+      date: parseDateValue(row.raceDateInput.value),
+    }))
+    .filter((entry) => entry.date);
+
+  if (!rowsWithDates.length) {
+    setFormMessage("");
+    return { valid: true, sourceWeek: null };
+  }
+
+  const invalidWeekdayEntry = rowsWithDates.find((entry) => !getRaceWeek(entry.date));
+  if (invalidWeekdayEntry) {
+    const message = "Las fechas de carrera deben ser entre martes y sabado.";
+    invalidWeekdayEntry.row.raceDateInput.setCustomValidity(message);
+    setFormMessage(message);
+    return { valid: false, sourceWeek: null };
+  }
+
+  const weekKeys = rowsWithDates.map((entry) => ({
+    row: entry.row,
+    week: getRaceWeek(entry.date),
+  }));
+
+  const firstWeekKey = dateKey(weekKeys[0].week.start);
+  const mixedWeek = weekKeys.find((entry) => dateKey(entry.week.start) !== firstWeekKey);
+
+  if (mixedWeek) {
+    const message = "Las fechas de pago activas deben pertenecer a la misma semana de carreras.";
+    weekKeys.forEach((entry) => {
+      entry.row.raceDateInput.setCustomValidity(message);
+    });
+    setFormMessage(message);
+    return { valid: false, sourceWeek: null };
+  }
+
+  const earliestDate = rowsWithDates
+    .map((entry) => entry.date)
+    .sort((left, right) => left.getTime() - right.getTime())[0];
+
+  setFormMessage("");
+  return { valid: true, sourceWeek: getRaceWeek(earliestDate) };
+}
+
+function renderRows() {
+  paymentRows.forEach((row) => {
+    const programNumber = parseProgramNumber(row.programInput);
+    const raceDate = parseDateValue(row.raceDateInput.value);
+    const amount = parseAmount(row.amountInput);
+
+    setSlotValue(row.previewProgram, programNumber == null ? "" : String(programNumber));
+    setSlotValue(row.previewRaceDate, formatRaceDate(raceDate));
+    setSlotValue(row.previewAmount, amount == null ? "" : formatCurrency(amount));
+    setSlotValue(row.previewWords, amountToWords(amount));
+  });
+}
+
+function renderTotals(activeRows) {
+  const amounts = activeRows
+    .map((row) => parseAmount(row.amountInput))
+    .filter((amount) => amount != null);
+
+  const total = amounts.length
+    ? Math.round(amounts.reduce((sum, amount) => sum + amount, 0) * 100) / 100
+    : null;
+
+  setSlotValue(previewTotal, total == null ? "" : formatCurrency(total));
+  setSlotValue(previewTotalWords, amountToWords(total));
 }
 
 function renderLetter() {
   updatePaymentVisibility();
 
-  const paymentCount = paymentCountInput.value;
-  const payment1 = parseAmount(payment1Input);
-  const payment2 = paymentCount === "2" ? parseAmount(payment2Input) : null;
+  const activeRows = getActiveRows();
+  const validation = validateRaceWeeks(activeRows);
 
   setSlotValue(previewDate, formatLetterDate(letterDateInput.value));
-  setSlotValue(previewPayment1, payment1 == null ? "" : formatCurrency(payment1));
-  setSlotValue(previewPayment1Words, amountToWords(payment1));
-  setSlotValue(previewPayment2, payment2 == null ? "" : formatCurrency(payment2));
-  setSlotValue(previewPayment2Words, amountToWords(payment2));
+  setSlotValue(previewWeekRange, formatWeekRange(validation.sourceWeek));
 
-  const activeAmounts = [payment1, payment2].filter((amount) => amount != null);
-  const total = activeAmounts.length
-    ? Math.round(activeAmounts.reduce((sum, amount) => sum + amount, 0) * 100) / 100
-    : null;
-
-  setSlotValue(previewTotal, total == null ? "" : formatCurrency(total));
-  setSlotValue(previewTotalWords, amountToWords(total));
+  renderRows();
+  renderTotals(activeRows);
 }
 
 function showSignatureFallback() {
@@ -277,21 +478,15 @@ function hideSignatureFallback() {
 }
 
 function canPrint() {
-  updatePaymentVisibility();
-
-  const fieldsAreValid = form.reportValidity();
-  const payment1 = parseAmount(payment1Input);
-  const payment2 = paymentCountInput.value === "2" ? parseAmount(payment2Input) : 0;
-  const amountsAreValid = payment1 != null && payment2 != null;
-
-  return fieldsAreValid && amountsAreValid;
+  renderLetter();
+  return form.reportValidity();
 }
 
 signatureImage.addEventListener("error", showSignatureFallback);
 signatureImage.addEventListener("load", hideSignatureFallback);
 
 form.addEventListener("input", renderLetter);
-paymentCountInput.addEventListener("change", renderLetter);
+form.addEventListener("change", renderLetter);
 printButton.addEventListener("click", () => {
   if (!canPrint()) {
     return;
@@ -300,6 +495,7 @@ printButton.addEventListener("click", () => {
   window.print();
 });
 
+setTodayIfEmpty();
 renderLetter();
 
 if (!signatureImage.complete || !signatureImage.naturalWidth) {
