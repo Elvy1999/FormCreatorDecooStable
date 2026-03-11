@@ -638,11 +638,11 @@ body {
 
   .letter-sheet {
     width: 7.75in;
-    min-height: 10.2in;
+    min-height: 10.35in;
     padding: 0;
     box-shadow: none;
     margin: 0 auto;
-    line-height: 1.08;
+    line-height: 1.1;
     overflow: hidden;
   }
 
@@ -653,51 +653,51 @@ body {
   .city-line,
   .date-line,
   .letter-body {
-    font-size: 0.17in;
+    font-size: 0.172in;
   }
 
   .header-date-block {
     width: 2.7in;
-    margin-top: 0.12in;
+    margin-top: 0.15in;
   }
 
   .letter-header {
-    min-height: 0.95in;
+    min-height: 1in;
   }
 
   .attention-row {
-    margin-top: 0.12in;
+    margin-top: 0.14in;
   }
 
   .intro-copy {
-    margin-top: 0.1in;
+    margin-top: 0.12in;
   }
 
   .payments-block,
   .bank-copy,
   .signature-block {
-    margin-top: 0.08in;
+    margin-top: 0.1in;
   }
 
   .payment-item {
-    margin-top: 0.07in;
+    margin-top: 0.08in;
   }
 
   .payment-words,
   .total-words {
-    margin-top: 0.01in;
+    margin-top: 0.015in;
   }
 
   .payment-line {
-    margin-top: 0.01in;
+    margin-top: 0.015in;
   }
 
   .total-block {
-    margin-top: 0.12in;
+    margin-top: 0.15in;
   }
 
   .bank-grid {
-    margin-top: 0.01in;
+    margin-top: 0.02in;
   }
 
   .signature-label {
@@ -705,11 +705,11 @@ body {
   }
 
   .owner-name {
-    margin-top: 0.12in;
+    margin-top: 0.14in;
   }
 
   .page-number {
-    margin-top: 0.08in;
+    margin-top: 0.12in;
   }
 
   .recipient-grid,
