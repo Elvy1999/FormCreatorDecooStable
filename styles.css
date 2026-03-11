@@ -603,7 +603,7 @@ body {
 
 @page {
   size: letter;
-  margin: 0.35in;
+  margin: 0.2in;
 }
 
 @media print {
@@ -623,68 +623,71 @@ body {
   .preview-panel {
     display: block;
     padding: 0;
+    overflow: visible;
   }
 
   .letter-sheet {
-    width: auto;
-    min-height: auto;
+    width: 7.75in;
+    min-height: 10.2in;
     padding: 0;
     box-shadow: none;
-    margin: 0;
-    line-height: 1.14;
+    margin: 0 auto;
+    line-height: 1.08;
+    overflow: hidden;
   }
 
   .letter-header h2 {
-    font-size: 0.35in;
+    font-size: 0.33in;
   }
 
   .city-line,
   .date-line,
   .letter-body {
-    font-size: 0.185in;
+    font-size: 0.17in;
   }
 
   .header-date-block {
-    margin-top: 0.18in;
+    width: 2.7in;
+    margin-top: 0.12in;
   }
 
   .letter-header {
-    min-height: 1.2in;
+    min-height: 0.95in;
   }
 
   .attention-row {
-    margin-top: 0.16in;
+    margin-top: 0.12in;
   }
 
   .intro-copy {
-    margin-top: 0.14in;
+    margin-top: 0.1in;
   }
 
   .payments-block,
   .bank-copy,
   .signature-block {
-    margin-top: 0.11in;
+    margin-top: 0.08in;
   }
 
   .payment-item {
-    margin-top: 0.09in;
+    margin-top: 0.07in;
   }
 
   .payment-words,
   .total-words {
-    margin-top: 0.02in;
+    margin-top: 0.01in;
   }
 
   .payment-line {
-    margin-top: 0.02in;
+    margin-top: 0.01in;
   }
 
   .total-block {
-    margin-top: 0.2in;
+    margin-top: 0.12in;
   }
 
   .bank-grid {
-    margin-top: 0.02in;
+    margin-top: 0.01in;
   }
 
   .signature-label {
@@ -696,6 +699,24 @@ body {
   }
 
   .page-number {
-    margin-top: 0.12in;
+    margin-top: 0.08in;
+  }
+
+  .recipient-grid,
+  .attention-row,
+  .intro-copy,
+  .payments-block,
+  .payment-item,
+  .total-block,
+  .bank-copy,
+  .signature-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .fill-slot,
+  .money-slot,
+  .words-slot {
+    min-height: 0.14in;
   }
 }
