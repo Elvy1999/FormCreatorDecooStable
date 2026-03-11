@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DECOO STABLE | Carta de pago</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="controls-panel" aria-label="Formulario de carta">
+      <div class="controls-card">
+        <p class="eyebrow">Plantilla fija</p>
+        <h1>Solicitud de pago de premio</h1>
+        <p class="panel-copy">
+          Completa la fecha y los montos. El total y el monto en palabras se generan
+          automaticamente para la carta imprimible.
+        </p>
+
+        <form id="letterForm" class="input-grid">
+          <label class="field">
+            <span>Fecha de la carta</span>
+            <input id="letterDate" name="letterDate" type="date" required>
+          </label>
+
+          <label class="field">
+            <span>Cantidad de pagos</span>
+            <select id="paymentCount" name="paymentCount">
+              <option value="1">1 pago</option>
+              <option value="2">2 pagos</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Monto pago 1 (RD$)</span>
+            <input
+              id="payment1"
+              name="payment1"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+            >
+          </label>
+
+          <label class="field" id="payment2Field">
+            <span>Monto pago 2 (RD$)</span>
+            <input
+              id="payment2"
+              name="payment2"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+            >
+          </label>
+
+          <div class="actions">
+            <button type="button" id="printButton">Imprimir carta</button>
+          </div>
+        </form>
+
+        <p class="signature-note">
+          Para incluir la firma, guarda tu imagen en esta carpeta con el nombre
+          <code>signature.png</code>.
+        </p>
+      </div>
+    </aside>
+
+    <main class="preview-panel">
+      <article class="letter-sheet" id="printArea" aria-label="Vista previa de la carta">
+        <header class="letter-header">
+          <h2>DECOO STABLE</h2>
+          <div class="header-date-block">
+            <p class="city-line">Santo Domingo Este, Rep. Dom.</p>
+            <p class="date-line" id="previewDate"></p>
+          </div>
+        </header>
+
+        <section class="letter-body">
+          <div class="recipient-grid">
+            <p class="label">Se&ntilde;ores:</p>
+            <div class="value-block">
+              <p class="strong">Comisi&oacute;n H&iacute;pica Nacional.</p>
+              <p class="strong">Hip&oacute;dromo V Centenario.</p>
+            </div>
+          </div>
+
+          <div class="attention-row">
+            <div class="attention-left">
+              <p class="label">Atenci&oacute;n:</p>
+              <p>Francisco Pavonessa, Presidente.</p>
+            </div>
+            <div class="attention-right">
+              <p class="label">Asunto:</p>
+              <p class="subject strong">Solicitud de pago de premio.</p>
+            </div>
+          </div>
+
+          <div class="intro-copy">
+            <p>Distinguidos se&ntilde;ores,</p>
+            <p>
+              Por medio de la presente, tengo a bien solicitar el pago de premio(s) de la semana del
+              <span class="blank-inline blank-inline-long"></span>, correspondiente a la participaci&oacute;n de
+              nuestros ejemplares que incluyen dicho periodo, seg&uacute;n detallamos a continuaci&oacute;n:
+            </p>
+          </div>
+
+          <div class="payments-block">
+            <section class="payment-item">
+              <div class="bullet">&bull;</div>
+              <div class="payment-copy">
+                <p class="payment-line strong">
+                  Programa no <span class="blank-inline blank-inline-short"></span> de fecha
+                  <span class="blank-inline blank-inline-verylong"></span>.
+                </p>
+                <p class="payment-line strong">
+                  Para un total de RD$<span class="money-slot" id="previewPayment1"></span>.
+                </p>
+                <p class="payment-words">(<span class="words-slot" id="previewPayment1Words"></span>).</p>
+              </div>
+            </section>
+
+            <section class="payment-item">
+              <div class="bullet">&bull;</div>
+              <div class="payment-copy">
+                <p class="payment-line strong">
+                  Programa no <span class="blank-inline blank-inline-short"></span> de fecha
+                  <span class="blank-inline blank-inline-verylong"></span>.
+                </p>
+                <p class="payment-line strong">
+                  Para un total de RD$<span class="money-slot" id="previewPayment2"></span>.
+                </p>
+                <p class="payment-words">(<span class="words-slot" id="previewPayment2Words"></span>).</p>
+              </div>
+            </section>
+
+            <section class="total-block">
+              <p class="total-line strong">
+                <span>UN TOTAL DE</span>
+                <span class="total-currency">RD$<span class="money-slot money-slot-total" id="previewTotal"></span>.</span>
+              </p>
+              <p class="payment-words total-words">(<span class="words-slot words-slot-total" id="previewTotalWords"></span>).</p>
+            </section>
+          </div>
+
+          <div class="bank-copy">
+            <p>
+              Realizar dicho pago a favor del propietario, ELVY RAMON DE COO ABRAHAM.
+            </p>
+            <div class="bank-grid">
+              <p class="label">Datos bancarios:</p>
+              <div class="bank-values">
+                <p>BANCO POPULAR</p>
+                <p>CUENTA NO. 0851704668</p>
+                <p>AHORRO, RD.</p>
+                <p>CED. 001-0817787-4</p>
+              </div>
+            </div>
+          </div>
+
+          <footer class="signature-block">
+            <div class="signature-wrap">
+              <img
+                id="signatureImage"
+                class="signature-image"
+                src="signature.png"
+                alt="Firma del propietario"
+              >
+              <p id="signatureFallback" class="signature-fallback">
+                Agrega <code>signature.png</code> para mostrar la firma en la carta.
+              </p>
+            </div>
+
+            <p class="signature-label">Atentamente,</p>
+            <p class="owner-name">ELVY RAMON DE COO ABRAHAM</p>
+            <p>Due&ntilde;o: DECOO STABLE</p>
+          </footer>
+
+          <p class="page-number">1</p>
+        </section>
+      </article>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
