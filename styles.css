@@ -72,8 +72,7 @@ body {
   line-height: 1.1;
 }
 
-.panel-copy,
-.signature-note {
+.panel-copy {
   color: var(--text-muted);
   line-height: 1.45;
 }
@@ -405,52 +404,15 @@ body {
 }
 
 .signature-block {
-  position: relative;
   margin-top: 0.2in;
-  min-height: 1.45in;
-}
-
-.signature-wrap {
-  position: absolute;
-  left: 0.12in;
-  top: -0.1in;
-  width: 2.2in;
-  min-height: 0.86in;
-  background: linear-gradient(180deg, rgba(214, 213, 207, 0.98), rgba(223, 222, 216, 0.9));
-  border-radius: 0.22in;
-  border: 1px solid rgba(115, 94, 73, 0.06);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.08in;
-}
-
-.signature-image {
-  max-width: 100%;
-  max-height: 0.7in;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  opacity: 0.96;
-  filter: grayscale(0.08) saturate(0.72) contrast(1.05) brightness(1.02);
-}
-
-.signature-fallback {
-  display: none;
-  margin: 0;
-  padding: 0.08in;
-  text-align: center;
-  font-size: 0.16in;
-  line-height: 1.35;
-  color: #65594d;
 }
 
 .signature-label {
-  padding-top: 0.92in;
+  padding-top: 0;
 }
 
 .owner-name {
-  margin-top: 0.38in;
+  margin-top: 0.16in;
 }
 
 .page-number {
@@ -497,8 +459,7 @@ body {
     font-size: 1.45rem;
   }
 
-  .panel-copy,
-  .signature-note {
+  .panel-copy {
     font-size: 0.95rem;
   }
 
@@ -598,61 +559,74 @@ body {
   .letter-sheet {
     width: auto;
     min-height: auto;
-    padding: 0.03in 0;
+    padding: 0;
     box-shadow: none;
     margin: 0;
+    line-height: 1.14;
   }
 
   .letter-header h2 {
-    font-size: 0.38in;
+    font-size: 0.35in;
   }
 
   .city-line,
   .date-line,
   .letter-body {
-    font-size: 0.195in;
+    font-size: 0.185in;
   }
 
   .header-date-block {
-    margin-top: 0.24in;
+    margin-top: 0.18in;
+  }
+
+  .letter-header {
+    min-height: 1.2in;
   }
 
   .attention-row {
-    margin-top: 0.2in;
+    margin-top: 0.16in;
   }
 
   .intro-copy {
-    margin-top: 0.18in;
+    margin-top: 0.14in;
   }
 
   .payments-block,
   .bank-copy,
   .signature-block {
-    margin-top: 0.14in;
+    margin-top: 0.11in;
   }
 
   .payment-item {
-    margin-top: 0.12in;
+    margin-top: 0.09in;
   }
 
   .payment-words,
   .total-words {
-    margin-top: 0.03in;
+    margin-top: 0.02in;
+  }
+
+  .payment-line {
+    margin-top: 0.02in;
+  }
+
+  .total-block {
+    margin-top: 0.2in;
+  }
+
+  .bank-grid {
+    margin-top: 0.02in;
   }
 
   .signature-label {
-    padding-top: 0.82in;
+    padding-top: 0;
   }
 
   .owner-name {
-    margin-top: 0.3in;
+    margin-top: 0.12in;
   }
 
   .page-number {
-    margin-top: 0.18in;
-  }
-
-  .signature-fallback {
-    display: none !important;
+    margin-top: 0.12in;
   }
 }

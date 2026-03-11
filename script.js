@@ -9,9 +9,6 @@ const previewWeekRange = document.getElementById("previewWeekRange");
 const previewTotal = document.getElementById("previewTotal");
 const previewTotalWords = document.getElementById("previewTotalWords");
 
-const signatureImage = document.getElementById("signatureImage");
-const signatureFallback = document.getElementById("signatureFallback");
-
 const fullDayNames = [
   "Domingo",
   "Lunes",
@@ -467,23 +464,10 @@ function renderLetter() {
   renderTotals(activeRows);
 }
 
-function showSignatureFallback() {
-  signatureImage.hidden = true;
-  signatureFallback.style.display = "block";
-}
-
-function hideSignatureFallback() {
-  signatureImage.hidden = false;
-  signatureFallback.style.display = "none";
-}
-
 function canPrint() {
   renderLetter();
   return form.reportValidity();
 }
-
-signatureImage.addEventListener("error", showSignatureFallback);
-signatureImage.addEventListener("load", hideSignatureFallback);
 
 form.addEventListener("input", renderLetter);
 form.addEventListener("change", renderLetter);
@@ -497,7 +481,3 @@ printButton.addEventListener("click", () => {
 
 setTodayIfEmpty();
 renderLetter();
-
-if (!signatureImage.complete || !signatureImage.naturalWidth) {
-  showSignatureFallback();
-}
